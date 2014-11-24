@@ -118,8 +118,8 @@ A debug response will contain zero or more lines, sandwiched
 between a line containing "debug-ack-begin" and "debug-ack-end".
 The response can be empty, i.e.:
 
-  debug-ack-begin
-  debug-ack-end
+    debug-ack-begin
+    debug-ack-end
 
 or you may wish to include logic that prints the current state
 of the cache for debugging purposes. Either way, the command must
@@ -144,12 +144,11 @@ contains 0xFE at byte offset 7, and 0x10 at byte offset
 zero. Note that there is no notion of endian-ness here,
 as we are not inside the CPU.
 
-Submission
-----------
+# Submission
 
 Your submission should be a zip file containing:
 
-- A file call a C++ source file called `mem_sim.cpp` which
+- A C++ source file called `mem_sim.cpp` which
   implements the simulator.
   
 - (Optional) Any ancilliary C++ sources called `mem_sim_*.cpp`
@@ -206,21 +205,21 @@ example input and output files for a cache with:
 To execute your program with this input, you would
 do:
 
-  cat direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2
+    cat direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2
 
 in a unix-style command line, or:
 
-  type direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2
+    type direct-mapped.input | mem_sim 8 2 2 1 2 1 2 2
 
 in a windows command prompt. In both cases the output
 should be printed to stdout, and could be captured to
 the file `direct-mapped.got` by redirecting:
 
-  cat direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2 > direct-mapped.got
+    cat direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2 > direct-mapped.got
   
 or:
 
-  type direct-mapped.input | ./mem_sim 8 2 2 1 2 1 2 2 > direct-mapped.got
+    type direct-mapped.input | mem_sim 8 2 2 1 2 1 2 2 > direct-mapped.got
 
 Some things to notice
 ---------------------
@@ -302,20 +301,21 @@ then tells you whether you need to read an address
 (i.e. an integer), and possibly also a string of
 hex characters. So something like:
 
-  while(1){
-    std::string cmd;
-    
-    std::cin>>cmd;
-    // Handle end of file here
-    
-    if(cmd=="read-req"){
-      unsigned addr;
-      std::cin>>addr;
+    while(1){
+        std::string cmd;
+        
+        std::cin>>cmd;
+        // Handle end of file here
+         
+         
+        if(cmd=="read-req"){
+            unsigned addr;
+            std::cin>>addr;
       
-      // Now handle a read at address "addr"
-    }else if(cmd=="write-req"){
-      ...
-  }
+           // Now handle a read at address "addr"
+        }else if(cmd=="write-req"){
+            ...
+    }
 
 # How can I parse the input lines in C?
 
@@ -331,17 +331,18 @@ imagine the person producing the requests using
 printf strings, then you can use sscanf with the
 same string to parse it. 
 
-  while(1){
-    char buffer[1024]={0};
-    
-    fgets(buffer, sizeof(buffer), stdin);
-    // Handle end of file
-    
-    unsigned address;
-    if(sscanf(buffer, "read-req %u", &address)){
-      // Handle a read request at "address" 
-    }else ... // other input patterns
-  }
+    while(1){
+        char buffer[1024]={0};
+        
+        fgets(buffer, sizeof(buffer), stdin);
+        // Handle end of file
+        
+        unsigned address;
+        if(sscanf(buffer, "read-req %u", &address)){
+           // Handle a read request at "address" 
+        }else{
+           ... // other input patterns
+        }
   
 # What should I do if the input file is malformed?
 
@@ -365,7 +366,7 @@ and sed: http://stackoverflow.com/a/5413132
 
 One example is the sed command:
 
-  sed -r -e "/#.*/d" -
+    sed -r -e "/#.*/d" -
   
 Which will take input on stdin, and write it on stdout without
 any comments.
@@ -378,7 +379,7 @@ are many ways of doing that. One tool which will do it is `pr`,
 so if you have (un-commented) files `test.input`, `test.output`, and
 `test.got`, you could do:
 
-  pr -m -t test.input test.output test.got
+    pr -m -t test.input test.output test.got
 
 to get them printed out side by side.
 
@@ -389,16 +390,16 @@ runs your program, does any comment stripping, prints the
 columns side by side, and also diffs the output. Something
 like:
 
-  #!/bin/bash
-  INPUT=test.input;
-  OUTPUT=test.output;
-  GOT=test.got;
-  
-  # Run your program, write the output to file name in GOT
-  cat ${INPUT}  |  ./mem_sim 8 2 2 1 2 1 2 2  >  ${GOT}
-
-  # Look at the differences (this assumes no comments)
-  diff ${OUTPUT} ${GOT}
+    #!/bin/bash
+    INPUT=test.input;
+    OUTPUT=test.output;
+    GOT=test.got;
+    
+    # Run your program, write the output to file name in GOT
+    cat ${INPUT}  |  ./mem_sim 8 2 2 1 2 1 2 2  >  ${GOT}
+    
+    # Look at the differences (this assumes no comments)
+    diff ${OUTPUT} ${GOT}
 
 You can stick pretty much any commands in a script, and
 then execute them in one go (including compilation of
