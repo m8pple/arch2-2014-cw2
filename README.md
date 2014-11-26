@@ -29,7 +29,7 @@ an empty cache. Input transactions should be processed until
 end-of-file on stdin, which will result in the program
 exiting.
 
-# Parameters
+### Parameters
 
 Input parameters (in order of appearance on
 the command line) are:
@@ -57,7 +57,7 @@ Total memory space size is at most 8MB.
 The cache should operate a LRU replacement policy,
 and a write-back write policy.
 
-# Input
+### Input
 
 The input stream on `stdin` will consist of three types of
 transaction, with the following patterns:
@@ -86,7 +86,7 @@ Comments do not produce any response, and should be discarded.
 The maximum length of any line in the input string is 1020
 characters.
 
-# Output
+### Output
 
 In response, your program will produce a stream of
 responses on `stdout`, describing the result of the transaction:
@@ -128,7 +128,7 @@ be supported.
 Comments can be produced at any time (or not at all), and
 will be discarded.
 
-# Data representation and format
+### Data representation and format
 
 All addresses are byte addresses. Both addresses
 and set indices are decimal integers
@@ -144,7 +144,8 @@ contains 0xFE at byte offset 7, and 0x10 at byte offset
 zero. Note that there is no notion of endian-ness here,
 as we are not inside the CPU.
 
-# Submission
+Submission
+----------
 
 Your submission should be a zip file containing:
 
@@ -181,11 +182,11 @@ The marks weighting is broken down as follows:
   
 As before, there is a formative deadline, where I try your code
 on a sub-set of tests, and try to point out if it is not following
-the spec in an obvious way, before the final deadline.
+the spec in an obvious way, before the final hard deadline.
 
-Formative deadline: Friday 29th 23:59.
+Formative deadline: Thursday 4th 23:59.
 
-Hard deadline: Monday 8th 23:59.
+Hard deadline: Thursday 11th 23:59.
 
 Example input
 -------------
@@ -221,16 +222,19 @@ or:
 
     type direct-mapped.input | mem_sim 8 2 2 1 2 1 2 2 > direct-mapped.got
 
+Notes
+=====
+
 Some things to notice
 ---------------------
 
-# Single word blocks
+### Single word blocks
 
 If there is only one word per block, then write misses
 can be optimised to be slightly faster than write misses
 on multi-word blocks.
 
-# LRU management
+### LRU management
 
 If you associate each valid (i.e. non empty) block in the
 cache with the read or write request it was last (most recently)
@@ -251,7 +255,7 @@ around, you just need a list of block indices.
 Anticipated questions
 ---------------------
 
-# How do I know if my cache works?
+### How do I know if my cache works?
 
 Creating input by hand works quite well for small
 sizes, e.g. using a spreadsheet to manually track
@@ -268,7 +272,7 @@ If you don't, then that probably shows you need to
 spend more time with the book (which is rather the point
 of the exercise).
 
-# How can I read from stdin?
+### How can I read from stdin?
 
 You can read from stdin using `fgets`, `scanf` or `std::cin`.
 Similarly, `printf` and `std::cout` will write to stdout.
@@ -283,7 +287,7 @@ Jesus cry:
 http://stackoverflow.com/questions/3302255/c-scanf-vs-gets-vs-fgets
 However, I won't mark you down or anything.
 
-# We haven't done language processors yet, how can we parse stuff?
+### We haven't done language processors yet, how can we parse stuff?
 
 This is a very restricted form of parsing, as you know
 there are only four possible input types, each one is
@@ -292,7 +296,7 @@ each line is precisely fixed. There are simple
 ways of doing this form of parsing, in either
 C style or C++ style.
 
-# How can I parse the input lines in C++?
+### How can I parse the input lines in C++?
 
 In C++ style, just use the `>>` operator to bring
 in the different parts. First read a string, and
@@ -317,7 +321,7 @@ hex characters. So something like:
             ...
     }
 
-# How can I parse the input lines in C?
+### How can I parse the input lines in C?
 
 You can mimic the C++ style, using `fscanf` to
 read each part of the input, first using it to
@@ -344,7 +348,7 @@ same string to parse it.
            ... // other input patterns
         }
   
-# What should I do if the input file is malformed?
+### What should I do if the input file is malformed?
 
 For this exercise you don't need to worry about invalid
 input. Ideally you would fail gracefully with an error
@@ -353,12 +357,12 @@ acceptable to crash, start producing gibberish, whatever.
 The only thing you are not allowed to do is anything
 deliberately malicious.
   
-# How can I compare the output of my program against the reference?
+### How can I compare the output of my program against a reference?
 
 There's a unix tool for that called `diff`, which will print
 differences between two files.
 
-# How can I ignore the differences in coments between output files?
+### How can I ignore the differences in coments between output files?
 
 There are a few tools which can do this, ranging from one liners
 in scripting languages like python and perl, to tool such as awk
@@ -371,7 +375,7 @@ One example is the sed command:
 Which will take input on stdin, and write it on stdout without
 any comments.
 
-# So I know there is a difference in the output, but how to debug it?
+### So I know there is a difference in the output, but how to debug it?
 
 A useful thing to do is to line up the input, your reference output,
 and the actual output from your program. Unsurprisingly, there
@@ -383,7 +387,7 @@ so if you have (un-commented) files `test.input`, `test.output`, and
 
 to get them printed out side by side.
 
-# There are so many commands, why do I have to keep typing them in?
+### There are so many commands, why do I have to keep typing them in?
 
 Well, you could put your testing commands in a script, which
 runs your program, does any comment stripping, prints the
@@ -417,15 +421,15 @@ the program if you want). The main steps are:
 4. Run it, remembering to use a leading `./` if you are in
   the same directory (e.g. `./script.sh`).
 
-# What if I don't want to use schell scripts?
+### What if I don't want to use schell scripts?
 
 Well, don't. Just type it in.
 
-# What if I'm using OSX, so those tools aren't available?
+### What if I'm using OSX, so those tools aren't available?
 
 Hopefully no-one on EIE would actually ask that.
 
-# What if I'm using Windows, so those tools aren't available?
+### What if I'm using Windows, so those tools aren't available?
 
 Well, you could install cygwin (or mingw if you are
 more hard-core), and all the tools will then be available.
@@ -435,7 +439,7 @@ writing a program that strips comments, prints them
 side by side, and highlights differences. It requires
 about 10 lines of C.
 
-# What does shell script have to do with Computer Architecture?
+### What does shell script have to do with Computer Architecture?
 
 Nothing. You can manually run all the commands each
 time, or build a GUI in Visual Basic to do testing, or
@@ -450,7 +454,7 @@ with files in a defined format is explicitly part of
 the exercise, doing so efficiently is only an implicit
 part.
 
-# Ugh, this is another massively complicated exercise that will take for ever.
+### Ugh, this is another massively complicated exercise that will take forever.
 
 Not really a question, but I'll answer it.
 
@@ -477,4 +481,4 @@ are a few fairly short steps:
 
 Of these steps, the most complicated are arguably 2, making
 sure you understand how a write-back LRU cache works, and 5,
-which is making sure your code.
+which is making sure your code works.
